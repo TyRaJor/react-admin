@@ -1,103 +1,64 @@
-import Image from "next/image";
+'use client';
+import { Card, Row, Col, Statistic } from 'antd';
+import { UserOutlined, FileTextOutlined, BarChartOutlined, SettingOutlined } from '@ant-design/icons';
+import MainLayout from '../components/MainLayout';
 
-export default function Home() {
+const Dashboard = () => {
+  // 模拟统计数据
+  const stats = [
+    {
+      title: '用户总数',
+      value: 1280,
+      icon: <UserOutlined style={{ color: '#1890ff' }} />,
+    },
+    {
+      title: '今日新增',
+      value: 24,
+      icon: <FileTextOutlined style={{ color: '#52c41a' }} />,
+    },
+    {
+      title: '活跃用户',
+      value: 856,
+      icon: <BarChartOutlined style={{ color: '#faad14' }} />,
+    },
+    {
+      title: '系统配置',
+      value: 12,
+      icon: <SettingOutlined style={{ color: '#f5222d' }} />,
+    },
+  ];
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+    <MainLayout>
+      <h1 className="text-2xl font-bold mb-6">仪表盘</h1>
+      <Row gutter={[16, 16]}>
+        {stats.map((stat, index) => (
+          <Col key={index} xs={24} sm={12} md={6}>
+            <Card>
+              <Statistic
+                title={stat.title}
+                value={stat.value}
+                prefix={stat.icon}
+              />
+            </Card>
+          </Col>
+        ))}
+      </Row>
+      <Card className="mt-6">
+        <h2 className="text-lg font-semibold mb-4">欢迎使用 React Admin 系统</h2>
+        <p>这是一个基于 Next.js、React、Ant Design 和 TypeScript 构建的管理系统模板。</p>
+        <p className="mt-2">功能特点：</p>
+        <ul className="list-disc pl-6 mt-2">
+          <li>用户认证与授权</li>
+          <li>用户管理</li>
+          <li>响应式布局</li>
+          <li>深色/浅色主题切换</li>
+          <li>状态持久化</li>
+          <li>模拟数据支持</li>
+        </ul>
+      </Card>
+    </MainLayout>
   );
-}
+};
+
+export default Dashboard;
