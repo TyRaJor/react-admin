@@ -13,10 +13,17 @@ const LoginPage: React.FC = () => {
   const [form] = Form.useForm();
   const { login, isAuthenticated } = useAuth();
 
-  // 如果已登录，重定向到首页
+  // 如果已登录，根据callbackUrl重定向或返回首页
   useEffect(() => {
     if (isAuthenticated) {
-      router.replace('/');
+      // 获取callbackUrl参数
+      if (typeof window !== 'undefined') {
+        const urlParams = new URLSearchParams(window.location.search);
+        const callbackUrl = urlParams.get('callbackUrl');
+        router.replace(callbackUrl || '/');
+      } else {
+        router.replace('/');
+      }
     }
   }, [isAuthenticated, router]);
 

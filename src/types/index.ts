@@ -30,6 +30,7 @@ export interface RouteObject {
   icon?: string;
   protected: boolean;
   component: () => Promise<{ default: React.ComponentType }>;
+  children?: RouteObject[];
 }
 
 // 模拟数据 - 用户列表

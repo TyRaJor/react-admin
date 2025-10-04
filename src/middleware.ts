@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 // 定义需要保护的路由
-const protectedRoutes = ['/users'];
+const protectedRoutes: string[] = [];
 
 // 定义无需保护的路由（登录页面和首页可以访问）
 const publicRoutes = ['/login', '/'];
@@ -19,9 +19,11 @@ export function middleware(request: NextRequest) {
 
   // 检查是否在受保护的路由中且没有token
   if (protectedRoutes.some(route => pathname.startsWith(route)) && !token) {
-    // 重定向到登录页面
+    // 重定向到登录页面并添加当前页面作为callbackUrl参数
+    const search = request.nextUrl.search;
+    const callbackUrl = encodeURIComponent(pathname + (search || ''));
     const loginUrl = new URL('/login', request.url);
-    loginUrl.searchParams.set('callbackUrl', pathname);
+    loginUrl.searchParams.set('callbackUrl', callbackUrl);
     return NextResponse.redirect(loginUrl);
   }
 

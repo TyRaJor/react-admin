@@ -2,8 +2,10 @@
 import { Card, Row, Col, Statistic } from 'antd';
 import { UserOutlined, FileTextOutlined, BarChartOutlined, SettingOutlined } from '@ant-design/icons';
 import MainLayout from '../components/MainLayout';
-
+import { useAppSelector } from '../store/hooks';
+import type { RootState } from '../store';
 const Dashboard = () => {
+  const theme = useAppSelector((state: RootState) => state.theme?.theme);
   // 模拟统计数据
   const stats = [
     {
@@ -34,21 +36,22 @@ const Dashboard = () => {
       <Row gutter={[16, 16]}>
         {stats.map((stat, index) => (
           <Col key={index} xs={24} sm={12} md={6}>
-            <Card>
+            <Card className={theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white'}>
               <Statistic
                 title={stat.title}
                 value={stat.value}
                 prefix={stat.icon}
+                className={theme === 'dark' ? 'text-white' : ''}
               />
             </Card>
           </Col>
         ))}
       </Row>
-      <Card className="mt-6">
-        <h2 className="text-lg font-semibold mb-4">欢迎使用 React Admin 系统</h2>
-        <p>这是一个基于 Next.js、React、Ant Design 和 TypeScript 构建的管理系统模板。</p>
-        <p className="mt-2">功能特点：</p>
-        <ul className="list-disc pl-6 mt-2">
+      <Card className={`mt-6 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white'}`}>
+        <h2 className={`text-lg font-semibold mb-4 ${theme === 'dark' ? 'text-white' : ''}`}>欢迎使用 React Admin 系统</h2>
+        <p className={theme === 'dark' ? 'text-gray-300' : ''}>这是一个基于 Next.js、React、Ant Design 和 TypeScript 构建的管理系统模板。</p>
+        <p className={`mt-2 ${theme === 'dark' ? 'text-gray-300' : ''}`}>功能特点：</p>
+        <ul className={`list-disc pl-6 mt-2 ${theme === 'dark' ? 'text-gray-300' : ''}`}>
           <li>用户认证与授权</li>
           <li>用户管理</li>
           <li>响应式布局</li>
